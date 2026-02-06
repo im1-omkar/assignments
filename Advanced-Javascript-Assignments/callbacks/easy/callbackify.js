@@ -5,6 +5,8 @@
 // The Promise should resolve with the data when no error occurs and reject when an error is provided.
 
 
+/**DONE */
+
 function callbackify(fn) {
 
    return function(...args){

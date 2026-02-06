@@ -5,12 +5,37 @@
 // As tasks complete, queued tasks should start automatically.
 // Each task must resolve with its own result.
 
+  /**DONE */
+
 class CallbackPool {
-  constructor(limit) {}
+  
+  constructor(limit) {
+    this.limit = limit;
+    this.queue = [];
+    this.running = 0;
+  }
 
-  run(task, onComplete) {}
+  run(task, onComplete) {
+    
+    this.queue.push({ task, onComplete });
+    this._next();
+  }
 
-  _next() {}
+  _next() {
+    
+    if (this.running >= this.limit) return;
+    if (this.queue.length === 0) return;
+
+    const { task, onComplete } = this.queue.shift();
+    this.running++;
+
+    task((err, result) => {
+      this.running--;
+      onComplete(err, result);
+      this._next(); 
+    });
+  }
 }
 
 module.exports = CallbackPool;
+
