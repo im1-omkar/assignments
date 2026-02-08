@@ -10,7 +10,16 @@
 // 1. Do NOT use `setTimeout` or Promises (those are non-blocking).
 // 2. Use a `while` loop with `Date.now()` or `performance.now()`.
 // 3. This is a teaching tool to show how NOT to write async code.
+    /**DONE */
 
-function blockEventLoop(ms) {}
+function blockEventLoop(ms) {
+
+    const start = new Date();
+
+    while((new Date() - start ) < ms + 1){
+
+    }
+
+}
 
 module.exports = blockEventLoop;
