@@ -9,6 +9,14 @@
 // If any of the asynchronous functions reject, the returned promise
 // should immediately reject with that error.
 
-async function runParallel(functions) {}
+    /**DONE */
+
+async function runParallel(functions) {
+
+    const promises = functions.map(fn => Promise.resolve(fn()))
+
+    return Promise.all(promises)
+
+}
 
 module.exports = runParallel;

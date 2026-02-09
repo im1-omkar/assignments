@@ -7,7 +7,15 @@
 // operation blocks the JavaScript event loop, preventing other code
 // (such as timers or async callbacks) from running until it completes.
 
+    /**DONE */
 
-function heavyCPU(iterations) {}
+function heavyCPU(iterations) {
+    let result = 0;
+    for(let i=0; i<iterations; i++){
+        result += i;
+    }
+
+    return result;
+}
 
 module.exports = heavyCPU;
