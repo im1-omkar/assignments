@@ -9,7 +9,7 @@
 // If any of the asynchronous functions reject, the returned promise
 // should immediately reject with that error.
 
-    /**DONE */
+    /**DONE  */
 
 async function runParallel(functions) {
 
