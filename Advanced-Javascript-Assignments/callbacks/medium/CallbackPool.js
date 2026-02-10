@@ -12,28 +12,36 @@ class CallbackPool {
   constructor(limit) {
     this.limit = limit;
     this.queue = [];
-    this.running = 0;
+    this.currRunning = 0;
   }
 
   run(task, onComplete) {
-    
-    this.queue.push({ task, onComplete });
-    this._next();
+    this.queue.push({task, onComplete});
+    this._next()
+   
   }
 
   _next() {
     
-    if (this.running >= this.limit) return;
-    if (this.queue.length === 0) return;
+    if(this.currRunning < this.limit){
+      this.currRunning++;
+      const currTask = this.queue.shift();
 
-    const { task, onComplete } = this.queue.shift();
-    this.running++;
+      currTask.task((err, result)=>{
+        this.currRunning--;
 
-    task((err, result) => {
-      this.running--;
-      onComplete(err, result);
-      this._next(); 
-    });
+        currTask.onComplete(err, result);
+
+        if(this.queue.length != 0){
+          this._next();
+        }
+
+      })
+    }
+    else{
+
+    }
+    
   }
 }
 
