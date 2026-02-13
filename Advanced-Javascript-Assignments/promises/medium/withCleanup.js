@@ -5,8 +5,22 @@
 // function succeeds or fails.
 //
 
-function withCleanup(fn, cleanup) {}
+function withCleanup(fn, cleanup) {
+
+    return async()=>{
+        try{
+            const result = await fn()
+            cleanup()
+            return result
+        }
+        catch(err){ 
+            cleanup();
+            throw new Error(err)
+        }
+    }
+    
+
+}
 
 module.exports = withCleanup;
 
-  

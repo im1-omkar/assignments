@@ -8,9 +8,21 @@
 //
 
 class TimedMutex {
-  constructor() {}
+  constructor() {
+    this.locked = false;
+    this.queue = [];
 
-  acquire(timeoutMs) {}
+  }
+
+  acquire(timeoutMs) {
+      if(this.locked == true){
+        this.queue.push(timeoutMs)
+      }
+
+      return ()=>{
+        this.locked = false;
+      }
+  }
 }
 
 module.exports = TimedMutex;
