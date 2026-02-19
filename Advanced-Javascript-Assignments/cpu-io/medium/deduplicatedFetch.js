@@ -6,6 +6,26 @@
 
 const pendingRequests = new Map();
 
-function deduplicatedFetch(id, apiCall) {}
+function deduplicatedFetch(id, apiCall) {
+
+    if(!pendingRequests.has(id)){
+        async ()=>{
+            try{
+                let result = await apiCall;
+                pendingRequests.get(id)["resolve"].forEach((resolve)=>{
+                    resolve(result)
+                })
+            }
+            catch(err){
+                pendingRequests.get(id)["reject"].forEach((reejct)=>{
+                    reejct(err)
+                })
+            }
+        }
+
+        
+    }
+
+}
 
 module.exports = deduplicatedFetch;
