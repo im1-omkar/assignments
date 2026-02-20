@@ -11,19 +11,20 @@
 // - Process items in fixed-size chunks.
 // - Yield using setImmediate after each chunk.
 // - Call onComplete after all items are processed.
+
+    /**DONE but once check the setImmediate function as it is throwing error for new Array(50000) but not thworing error for new Array(500) --> in test */
 async function chunkedProcessor(items, processFn, onComplete) {
+  const CHUNK_SIZE = 100;
 
-    for(let i=0; i<items.length; i++){
+  for (let i = 0; i < items.length; i++) {
+    processFn(items[i]);
 
-        processFn(items[i])
-
-        if(i%100 === 0){
-           await new Promise((resolve)=>{setTimeout(()=>{resolve()},10)})
-        } 
+    if ((i + 1) % CHUNK_SIZE === 0) {
+      await new Promise(resolve => setImmediate(resolve));
     }
+  }
 
-    onComplete()
-
+  onComplete();
 }
 
 module.exports = chunkedProcessor;

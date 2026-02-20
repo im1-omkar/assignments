@@ -7,25 +7,25 @@
 const pendingRequests = new Map();
 
 function deduplicatedFetch(id, apiCall) {
+  if (pendingRequests.has(id)) {
+    return pendingRequests.get(id);
+  }
 
-    if(!pendingRequests.has(id)){
-        async ()=>{
-            try{
-                let result = await apiCall;
-                pendingRequests.get(id)["resolve"].forEach((resolve)=>{
-                    resolve(result)
-                })
-            }
-            catch(err){
-                pendingRequests.get(id)["reject"].forEach((reejct)=>{
-                    reejct(err)
-                })
-            }
-        }
-
-        
+  const requestPromise = (async () => {
+    try {
+      const result = await apiCall(id); 
+      pendingRequests.delete(id);   
+      return result;
+    } catch (err) {
+      pendingRequests.delete(id);    
+      throw err;
     }
+  })();
 
+  pendingRequests.set(id, requestPromise);
+
+  return requestPromise;
 }
 
 module.exports = deduplicatedFetch;
+
