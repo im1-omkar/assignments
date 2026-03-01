@@ -11,6 +11,49 @@
 // - Run at most `limit` tasks in parallel until all are completed.
 // - Return results in the original task order via onAllFinished.
 
-function mapLimit(tasks, limit, onAllFinished) {}
+    /**DONE */
+function mapLimit(tasks, limit, onAllFinished) {
+    let running = 0;
+    let count = 0;
+    let completed = 0;
+    const result = new Array(tasks.length)
+
+
+    function _run(){
+
+        while(running < limit){
+            running++;
+            const currIdx = count;
+            const currTask = tasks[count++]
+
+            currTask((err, data)=>{
+                completed++;
+                if(err){
+                    result[currIdx] = err;
+                }
+                else{
+                    result[currIdx] = data;
+                }
+                
+                if(count < tasks.length){
+                    running--;
+                    _run()
+                    return;
+                }
+
+                if(completed == tasks.length){
+                    onAllFinished(null, result)
+                }
+
+            })  
+        }
+
+    }
+
+    if(running == 0){
+        _run()
+    }
+
+}
 
 module.exports = mapLimit;

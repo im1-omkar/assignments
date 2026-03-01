@@ -11,12 +11,47 @@
 // 3. If the bucket is full, new tasks must be rejected immediately
 // 4. Fairness must be preserved (FIFO execution)
 
+      /**DONE */
 class LeakyBucket {
-  constructor(capacity, leakRateMs) {}
+  constructor(capacity, leakRateMs) {
+    this.capacity = capacity;
+    this.leakRate = leakRateMs;
+    this.tasks = [];
+    this.running = false;
+  }
 
-  add(task, onComplete) {}
+  add(task, onComplete) {
 
-  _process() {}
+    if (this.tasks.length >= this.capacity) {
+      onComplete(new Error("Rate Limit Exceeded"));
+      return;
+    }
+
+    this.tasks.push([task, onComplete]);
+
+    if (!this.running) {
+      this.running = true;
+      this._process();
+    }
+  }
+
+  _process() {
+    if (this.tasks.length === 0) {
+      this.running = false;
+      return;
+    }
+
+    const [task, onComplete] = this.tasks[0];
+
+    task((err, val) => {
+      if (err) onComplete(err);
+      else onComplete(null, val);
+
+      this.tasks.shift();
+
+      setTimeout(() => this._process(), this.leakRate);
+    });
+  }
 }
 
 module.exports = LeakyBucket;
