@@ -9,7 +9,37 @@
 // 2. Any pending async operation should be aborted
 // 3. The pipeline must throw an AbortError
 //
-async function runPipeline(fns, signal) {}
+
+            /**DONE */
+            
+async function runPipeline(fns, signal) {
+    const functions = fns
+
+    return new Promise((resolve, reject)=>{
+        function _run(){
+            if (signal?.aborted) {
+                reject(new Error("Abort"))
+            }
+            const fn = functions.shift()
+
+            Promise.resolve(fn()).then((data)=>{
+                if(functions.length > 0){
+                    _run()
+                }
+                else{
+                    resolve()
+                }
+            }).catch((err)=>{
+                if(err.name === "AbortError"){
+                    reject(new Error("Abort"))
+                }
+            })
+        }
+
+        _run()
+    })
+
+}
 
 module.exports = runPipeline;
 
