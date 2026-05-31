@@ -11,6 +11,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "hooks-assignments": ".",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
