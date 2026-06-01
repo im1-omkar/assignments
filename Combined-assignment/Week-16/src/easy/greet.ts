@@ -4,6 +4,13 @@
 // Example Output: "Hello, P.G!"
 
 export function greetWithInitials(name: string): string {
-    const initials = name.split(' ').map(word => word[0].toUpperCase()).join('.');
-    return `Hello, ${initials}.`;
+    const names: string[] = name.split(' ');
+    const firstLetters : string[] = names.map((name:string)=>{
+        return name[0]
+    })
+    let shortName = " ";
+    firstLetters.forEach((name)=>{
+        shortName = shortName + name[0] +  '.'
+    })
+    return "Hello," + shortName
 }
