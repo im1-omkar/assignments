@@ -17,4 +17,26 @@
 
 // 78.53981633974483
 
+type Circle = {
+    radius : number
+}
+
+type Rectangle = {
+    height : number,
+    width : number
+}
+
+export type Shape = Circle | Rectangle
+
+export function getArea(shape:Shape):number{
+    if( 'radius' in shape && typeof shape.radius == 'number'){
+        return Math.PI*(shape.radius)*(shape.radius)
+    }
+    
+    if('height' in shape && typeof shape.height == 'number'){
+        return (shape.height)*(shape.width)
+    }
+
+    throw new Error("Invalid shape provided")
+}
 

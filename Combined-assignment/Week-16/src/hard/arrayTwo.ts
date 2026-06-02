@@ -19,3 +19,19 @@
 //     { name: "Charlie", age: 22, country: "India" }
 //   ]
 
+export interface User {
+    name: string,
+    age : number,
+    country : string
+}
+
+export function filterUsersByCountry(users: User[], country:string):User[]{
+
+    const filteredUser = users.filter((user)=>{
+        if(user.country == country){
+            return user
+        }
+    })
+
+    return filteredUser;
+}
