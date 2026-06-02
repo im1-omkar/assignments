@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "1-postgres-simple": ".",
     "@types/jest": "^29.5.12",
     "@types/pg": "^8.11.0",
     "pg": "^8.11.3",

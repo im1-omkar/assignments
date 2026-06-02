@@ -1,0 +1,17 @@
+{
+  "name": "test",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@types/node": "^25.9.1",
+    "@types/pg": "^8.20.0",
+    "pg": "^8.21.0"
+  }
+}
