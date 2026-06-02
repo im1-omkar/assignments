@@ -59,8 +59,8 @@ const signUpValidator = (
   const signUpObj = z.object({
     username: z.email(),
     password: z.string().min(5),
-    firstname: z.string().min(1).max(20),
-    lastname: z.string().min(1).max(20)
+    firstName: z.string().min(1).max(20),
+    lastName: z.string().min(1).max(20)
   })
 
   try {

@@ -7,7 +7,7 @@ const userRouter = express.Router()
 
 // SIGNUP
 userRouter.post(
-  "/user/signup",
+  "/signup",
   middleware.signUpValidator,
   async (req: express.Request, res: express.Response) => {
     try {
@@ -53,7 +53,7 @@ userRouter.post(
 
 // SIGNIN
 userRouter.post(
-  "/user/signin",
+  "/signin",
   async (req: express.Request, res: express.Response) => {
     try {
       const { username, password } = req.body
@@ -111,7 +111,7 @@ userRouter.post(
 
 // UPDATE USER
 userRouter.put(
-  "/user",
+  "",
   [middleware.protectedValidator,middleware.updateValidator],
   async (req: any, res: express.Response) => {
     try {
@@ -133,7 +133,7 @@ userRouter.put(
       return res.status(200).json({
         message: "Updated successfully",
         updatedData: result.rows[0],
-        
+
       })
     } catch (err) {
       console.log(err)
@@ -147,7 +147,7 @@ userRouter.put(
 
 // BULK SEARCH
 userRouter.get(
-  "/user/bulk",
+  "/bulk",
   async (req: express.Request, res: express.Response) => {
     try {
       const filter = req.query.filter as string

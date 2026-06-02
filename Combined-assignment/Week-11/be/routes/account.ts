@@ -6,7 +6,7 @@ const accountRouter = express.Router()
 
 // GET BALANCE
 accountRouter.get(
-  "/account/balance",
+  "/balance",
   middleware.protectedValidator,
   async (req: any, res: express.Response) => {
     try {
@@ -61,7 +61,7 @@ accountRouter.get(
 
 // TRANSFER MONEY
 accountRouter.post(
-  "/account/transfer",
+  "/transfer",
   middleware.protectedValidator,
   middleware.transferValidator,
   async (req: any, res: express.Response) => {
