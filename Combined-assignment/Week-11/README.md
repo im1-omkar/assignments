@@ -39,12 +39,14 @@ backend/
 ### User
 
 ```
+
 {
   username: String,   // email, unique
   password: String,
   firstName: String,
   lastName: String
 }
+
 ```
 
 ### Account
