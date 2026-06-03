@@ -5,6 +5,23 @@ import { client } from "../db"
 
 const userRouter = express.Router()
 
+const createAccount = async(userId:number)=>{
+  try{
+    const result = client.query(`
+        INSERT INTO  accounts (user_id, balance) VALUES ($1,$2)
+        `,[userId,1000])
+  }
+  catch(err){
+    if(err instanceof Error){
+      console.log("error while created a account!")
+      console.log(err.message);
+      return;
+    }
+    console.log("error while created a account!")
+    return
+  }
+}
+
 // SIGNUP
 userRouter.post(
   "/signup",
@@ -29,17 +46,20 @@ userRouter.post(
       }
 
       // insert user
-      await client.query(
+      const user = await client.query(
         `
         INSERT INTO users
         (user_name, password, first_name, last_name)
         VALUES ($1, $2, $3, $4)
+        RETURNING *
         `,
         [username, password, firstName, lastName]
       )
 
+      await createAccount(user.rows[0].id)
+
       return res.status(201).json({
-        message: "User created successfully",
+        message: "User created successfully && account created as well",
       })
     } catch (err) {
       console.log(err)
@@ -129,6 +149,8 @@ userRouter.put(
         `,
         [firstName, lastName, username]
       )
+
+      console.log(result.rows)
 
       return res.status(200).json({
         message: "Updated successfully",

@@ -7,6 +7,6 @@ app.use(express.json())
 
 app.use('/api/v1/user',userRouter)
 
-app.use('api/v1/account',accountRouter)
+app.use('/api/v1/account',accountRouter)
 
 export default app

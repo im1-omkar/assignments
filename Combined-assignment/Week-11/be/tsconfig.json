@@ -4,7 +4,7 @@
     "lib": ["ESNext"],
     "target": "ESNext",
     "module": "Preserve",
-    "types": ["node"],
+    "types": ["node","jest"],
     "moduleDetection": "force",
     "jsx": "react-jsx",
     "allowJs": true,

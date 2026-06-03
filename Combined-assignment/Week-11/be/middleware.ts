@@ -1,6 +1,6 @@
 import express from "express"
 import * as z from "zod"
-import jwt from "jsonwebtoken"
+import jwt, { type JwtPayload } from "jsonwebtoken"
 
 const updateValidator = (
   req: express.Request,
@@ -8,17 +8,19 @@ const updateValidator = (
   next: express.NextFunction
 ) => {
   const updateObj = z.object({
-    firstname: z.string().min(1).max(20).optional(),
-    lastname: z.string().min(1).max(20).optional()
+    firstName: z.string().min(1).max(20).optional(),
+    lastName: z.string().min(1).max(20).optional()
   })
 
   try {
     const data = updateObj.parse(req.body)
 
     // at least one field required
-    if (!data.firstname && !data.lastname) {
+    if (!data.firstName && !data.lastName) {
+
       return res.status(400).json({
         message: "At least one field is required"
+      
       })
     }
 
@@ -126,12 +128,12 @@ const protectedValidator = (
   const token = splitted[1]
 
   try {
-    const decoded = jwt.verify(
+    let decoded  = jwt.verify(
       token,
       process.env.JWT_SECRET as string
-    )
+    ) as JwtPayload
 
-    req.user = decoded
+    req.username = decoded.username
 
     next()
   } catch (err) {

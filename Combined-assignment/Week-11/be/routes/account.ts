@@ -10,7 +10,7 @@ accountRouter.get(
   middleware.protectedValidator,
   async (req: any, res: express.Response) => {
     try {
-      const username = req.user.username
+      const username = req.username
 
       // get user
       const userResult = await client.query(
@@ -33,7 +33,7 @@ accountRouter.get(
       // get balance
       const balanceResult = await client.query(
         `
-        SELECT balance
+        SELECT *
         FROM accounts
         WHERE user_id = $1
         `,
@@ -65,7 +65,7 @@ accountRouter.post(
   middleware.protectedValidator,
   middleware.transferValidator,
   async (req: any, res: express.Response) => {
-    const senderUsername = req.user.username
+    const senderUsername = req.username
 
     const { amount, toTransfer } = req.body
 
