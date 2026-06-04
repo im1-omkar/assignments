@@ -74,8 +74,10 @@ userRouter.post(
 // SIGNIN
 userRouter.post(
   "/signin",
+  middleware.signInValidator,
   async (req: express.Request, res: express.Response) => {
     try {
+
       const { username, password } = req.body
 
       // find user
