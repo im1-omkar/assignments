@@ -1,18 +1,16 @@
 // App.tsx
 
 import Step2 from "./component/chart"
-import Step1 from "./component/chart"
-
 
 
 const App = () => {
   
 
   return (
-    <div style={{border:"2px solid black"}}>
+    <div >
       <Step2/>
     </div>
   )
 }
 
-export default App
+export default App;
