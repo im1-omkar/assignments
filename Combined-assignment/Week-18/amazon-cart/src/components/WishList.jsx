@@ -1,6 +1,7 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import { wishList } from "../store/wishItemsState";
 import { cartItemsState } from "../store/cartItemsState";
+import toast from "react-hot-toast"
 
 const WishList = () => {
   const wishListItems = useRecoilValue(wishList);
@@ -10,6 +11,8 @@ const WishList = () => {
     const toAdd = wishListItems.find((item)=> item.id == id)
 
     setCartList([...cartList,{...toAdd,quantity:1}])
+
+    toast.success("Added to cart successfully")
   }
 
   return (
